@@ -1,0 +1,40 @@
+<form #forms="ngForm" (submit)="registerUser(forms.value)">
+    <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto form p-4">
+        <h3 class="head text-center">Registration Form</h3>
+        <p class="head text-center">Please fill this form to create an account.</p>
+        <hr>
+        <div class="form-group">
+            <label for="email"><b>Email</b></label>
+            <input type="text" class="form-control" name="email" #emailid="ngModel" [(ngModel)]="email"
+                placeholder="Enter Email" name="mailid" id="email" required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+            <div *ngIf="emailid.touched">
+                <div class="text-danger" *ngIf="emailid.errors?.required">Email is a required field</div>
+                <div class="text-danger" *ngIf="emailid.errors?.pattern">This is not a valid Email !!</div>
+            </div>
+        </div>
+        <small class="text-danger">{{errorMessage}}</small>
+        <div class="form-group">
+            <label for="name"><b>UserName</b></label>
+            <input type="text" class="form-control" name="name" placeholder="Enter your name" required ngModel>
+        </div>
+        <div class="form-group">
+            <label for="psw"><b>Password</b></label>
+            <input type="password" #pwd="ngModel" ([ngModel])="password" class="form-control"
+                placeholder="Enter Password" name="password" id="psw" required ngModel>
+        </div>
+        <div class="text-danger" *ngIf="pwd.invalid &&(pwd.dirty || pwd.touched)">
+            Password is required
+        </div>
+        <div class="form-group">
+            <label for="psw-repeat"><b>Confirm Password</b></label>
+            <input type="password" #cfmpwd="ngModel" ([ngModel])="confirmpassword" class="form-control"
+                placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required ngModel>
+        </div>
+        <div class="text-danger" *ngIf="cfmpwd.invalid &&(cfmpwd.dirty || cfmpwd.touched)">
+            <div *ngIf="cfmpwd.errors.required"> Confirm password is required</div>
+        </div>
+        <div *ngIf="cfmpwd.valid && cfmpwd.value != pwd.value" class="text-danger">Passwords did not match</div>
+        <button type="submit" class="btn btn-success" [disabled]="forms.invalid">Register</button>
+    </div>
+</form>

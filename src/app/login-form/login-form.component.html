@@ -1,0 +1,22 @@
+<div class="container login-container">
+    <div class="centered">
+        <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+            <h3>Login Form</h3>
+            <form #forms="ngForm" (submit)="loginUser(forms.value)">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Your Email *" name="mailid" value=""
+                        #emailid="ngModel" [(ngModel)]="mailid" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Your Password *" name="password" value=""
+                        #pwd="ngModel" [(ngModel)]="password" />
+                </div>
+                <small class="text-danger">{{errorMsg}}</small>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success" value="Login" />
+                </div>
+                <div class="form-group">
+                    <a href="#" class="NewUser" routerLink="/register">New user? Register here</a>
+                </div>
+            </form>
+        </div>

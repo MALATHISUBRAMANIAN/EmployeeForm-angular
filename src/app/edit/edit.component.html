@@ -1,0 +1,105 @@
+<div class="container">
+    <div class="form">
+        <h4 class="story head text-center">Edit your Employee Details</h4>
+        <div id="buttongroup" class="btn-group">
+            <button id="button" [disabled]="buttonDisabled" class="btn btn-primary" (click)="edit()">Edit</button>
+            <button id="button" *ngIf="!check" [disabled]="buttonDisabled" class="btn btn-primary"
+                (click)="cancel()">Cancel</button>
+            <button id="button" [disabled]="buttonDisabled" class="btn btn-danger" routerLink="/logout">Log
+                out</button>
+        </div>
+        <form #employeeForm='ngForm' (submit)='insert(employeeForm.value)'>
+            <div class="form-group">
+                <label for="Employee Name">Employee Name</label>
+                <input [disabled]="check" type="text" class="form-control" name="empname" #empnames="ngModel"
+                    [(ngModel)]="empname" placeholder="Enter your name" required />
+            </div>
+            <div class="text-danger" *ngIf="empnames.invalid &&(empnames.dirty || empnames.touched)">
+                <div *ngIf="empnames.errors.required"> Name is required</div>
+            </div>
+            <div class="form-group">
+                <label for="Email Id">EmailId</label>
+            <div>  <small class="text-info">Email Id should be same as login MailId</small></div>  
+                <input [disabled]="check" type="email" class="form-control is-invalid" name="mailid"
+                    placeholder="Enter your email id" [class.is-invalid]="emailcontrol.invalid &&emailcontrol.touched"
+                    required #emailcontrol="ngModel" [(ngModel)]="mailid" />
+                <small class="text-danger" [class.d-none]="emailcontrol.valid || emailcontrol.untouched">Email Id is
+                    required</small>
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input [disabled]="check" type="number" class="form-control" name="age" #agecontrol="ngModel"
+                    [(ngModel)]="age" placeholder="Enter your age" />
+            </div>
+            <div class="form-group">
+                <label for="qualification">Qualification</label>
+                <select [disabled]="check" id="qualification" name="qualification" class="form-control"
+                    #qualificationreq="ngModel" [(ngModel)]="qualification"
+                    [class.is-invalid]="qualificationreq.invalid && qualificationreq.touched" required ngModel>
+                    <option value="1">Choose your Qualification</option>
+                    <option *ngFor="let qualification of qualifications" [value]="qualification.id">
+                        {{qualification.qualification}}
+                    </option>
+                </select>
+                <small class="text-danger" [class.d-none]="qualificationreq.valid || qualificationreq.untouched">Please
+                    choose your qualification</small>
+            </div>
+            <div class="form-group">
+                <label for="experience">Experience</label>
+                <input [disabled]="check" type="number" class="form-control" name="experience"
+                    placeholder="Enter your experience" #experiencecontrol="ngModel" [(ngModel)]="experience" />
+            </div>
+            <div class="form-group">
+                <label for="Mobile Number">Mobile Number</label>
+                <input [disabled]="check" type="number" class="form-control" name="contactnumber" #mobile="ngModel"
+                    [(ngModel)]="contactnumber" pattern="^\d{10}$" placeholder="Enter your Mobile Number" required
+                    ngModel />
+                <div *ngIf="mobile.touched">
+                    <small class="text-danger" *ngIf="mobile.errors?.required">Mobile Number is required</small>
+                    <small class="text-danger" *ngIf="mobile.errors?.pattern">Mobile Number must be 10 digits</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Gender">Gender</label>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input [disabled]="check" type="radio" class="form-check-input" value="male" name="gender"
+                            [(ngModel)]="gender" />
+                        Male
+                    </label>
+                    <label class="form-check-label">
+                        <input [disabled]="check" type="radio" class="form-check-input" value="Female" name="gender"
+                            [(ngModel)]="gender" />
+                        Female
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="MaritalStatus">Marital Status</label>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input [disabled]="check" type="radio" class="form-check-input" #marital=ngModel value="single"
+                            name="maritalstatus" [(ngModel)]="maritalstatus" />
+                        Single
+                    </label>
+                    <label class="form-check-label">
+                        <input [disabled]="check" type="radio" class="form-check-input" #marital=ngModel value="Married"
+                            name="maritalstatus" [(ngModel)]="maritalstatus" />
+                        Married
+                    </label>
+                </div>
+                <div *ngIf="marital.value == 'Married'" class="form-group">
+                    <label for="No of Children">No of Children</label>
+                    <input type="number" class="form-control" name="children" required
+                        #childrencontrol="ngModel" [(ngModel)]="children" />
+                        <div class="text-danger" *ngIf="childrencontrol.invalid &&(childrencontrol.dirty || childrencontrol.touched)">
+                            <div *ngIf="childrencontrol.errors.required"> No of Children is required</div>
+                        </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button *ngIf="!check" type="submit" class="btn btn-success" style="margin-left: 10px;">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
