@@ -11,20 +11,22 @@
         <form #employeeForm='ngForm' (submit)='insert(employeeForm.value)'>
             <div class="form-group">
                 <label for="Employee Name">Employee Name</label>
-                <input [disabled]="check" type="text" class="form-control" name="empname" #empnames="ngModel"
-                    [(ngModel)]="empname" placeholder="Enter your name" required />
+                <input [disabled]="check" type="text" class="form-control is-invalid" name="empname" #empnames="ngModel"
+                    [(ngModel)]="empname" [class.is-invalid]="empnames.invalid &&empnames.touched" placeholder="Enter your name" required />
             </div>
-            <div class="text-danger" *ngIf="empnames.invalid &&(empnames.dirty || empnames.touched)">
-                <div *ngIf="empnames.errors.required"> Name is required</div>
-            </div>
+<div *ngIf = "empnames.invalid">
+    <small class="text-danger" [class.d-none]="empnames.valid || empnames.untouched">Name is
+        required</small>
+</div>
+        
+
             <div class="form-group">
                 <label for="Email Id">EmailId</label>
             <div>  <small class="text-info">Email Id should be same as login MailId</small></div>  
-                <input [disabled]="check" type="email" class="form-control is-invalid" name="mailid"
-                    placeholder="Enter your email id" [class.is-invalid]="emailcontrol.invalid &&emailcontrol.touched"
-                    required #emailcontrol="ngModel" [(ngModel)]="mailid" />
-                <small class="text-danger" [class.d-none]="emailcontrol.valid || emailcontrol.untouched">Email Id is
-                    required</small>
+                <input [disabled]="check" type="email" class="form-control" name="mailid"
+                    placeholder="Enter your email id" 
+                    required email #emailcontrol="ngModel" [(ngModel)]="mailid" readonly />
+               
             </div>
             <div class="form-group">
                 <label for="age">Age</label>
@@ -33,16 +35,18 @@
             </div>
             <div class="form-group">
                 <label for="qualification">Qualification</label>
-                <select [disabled]="check" id="qualification" name="qualification" class="form-control"
-                    #qualificationreq="ngModel" [(ngModel)]="qualification"
-                    [class.is-invalid]="qualificationreq.invalid && qualificationreq.touched" required ngModel>
-                    <option value="1">Choose your Qualification</option>
+                <select [disabled]="check" id="qualification" name="qualification" class="form-control is-invalid"
+                    #qualificationreq="ngModel" [(ngModel)]="qualification"  
+                    [class.is-invalid]="qualificationreq.touched && qualificationreq.value==0" required ngModel>
+                    <option value="0">Choose your Qualification</option>
                     <option *ngFor="let qualification of qualifications" [value]="qualification.id">
                         {{qualification.qualification}}
                     </option>
                 </select>
-                <small class="text-danger" [class.d-none]="qualificationreq.valid || qualificationreq.untouched">Please
+                <div *ngIf="qualificationreq.value==0 && qualificationreq.touched">
+                <small class="text-danger">Please
                     choose your qualification</small>
+                    </div>
             </div>
             <div class="form-group">
                 <label for="experience">Experience</label>
@@ -51,8 +55,8 @@
             </div>
             <div class="form-group">
                 <label for="Mobile Number">Mobile Number</label>
-                <input [disabled]="check" type="number" class="form-control" name="contactnumber" #mobile="ngModel"
-                    [(ngModel)]="contactnumber" pattern="^\d{10}$" placeholder="Enter your Mobile Number" required
+                <input [disabled]="check" type="number" class="form-control is-invalid" name="contactnumber" #mobile="ngModel"
+                    [(ngModel)]="contactnumber" pattern="^\d{10}$" [class.is-invalid]="mobile.invalid &&mobile.touched" placeholder="Enter your Mobile Number" required
                     ngModel />
                 <div *ngIf="mobile.touched">
                     <small class="text-danger" *ngIf="mobile.errors?.required">Mobile Number is required</small>
@@ -90,15 +94,16 @@
                 </div>
                 <div *ngIf="marital.value == 'Married'" class="form-group">
                     <label for="No of Children">No of Children</label>
-                    <input type="number" class="form-control" name="children" required
-                        #childrencontrol="ngModel" [(ngModel)]="children" />
-                        <div class="text-danger" *ngIf="childrencontrol.invalid &&(childrencontrol.dirty || childrencontrol.touched)">
-                            <div *ngIf="childrencontrol.errors.required"> No of Children is required</div>
-                        </div>
+                    <input [disabled]="check" type="number" class="form-control is-invalid" name="children" required
+                        #childrencontrol="ngModel" [(ngModel)]="children" [class.is-invalid]="childrencontrol.invalid &&childrencontrol.touched" />
+                        <div *ngIf = "childrencontrol.invalid">
+                        <small class="text-danger" [class.d-none]="childrencontrol.valid || childrencontrol.untouched">No of children is
+                            required</small>
+                            </div>
                 </div>
             </div>
             <div class="form-group">
-                <button *ngIf="!check" type="submit" class="btn btn-success" style="margin-left: 10px;">Save</button>
+                <button *ngIf="!check" type="submit" class="btn btn-success" [disabled]="employeeForm.invalid" style="margin-left: 10px;">Save</button>
             </div>
         </form>
     </div>

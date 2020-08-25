@@ -12,9 +12,9 @@
             </div>
             <div class="form-group">
                 <label for="Email Id">EmailId</label>
-                <div><small class="text-info">Email Id should be same as login MailId</small></div>
+                <div><small class="text-info">Email Id should be same as your login Mail Id</small></div>
                 <input type="email" class="form-control is-invalid" name="mailid" placeholder="Enter your email id"
-                    [class.is-invalid]="emailcontrol.invalid &&emailcontrol.touched" required #emailcontrol="ngModel"
+                    [class.is-invalid]="emailcontrol.invalid &&emailcontrol.touched" required email #emailcontrol="ngModel"
                     [(ngModel)]="mailid" />
 
                 <small class="text-danger" [class.d-none]="emailcontrol.valid || emailcontrol.untouched">Email Id is
@@ -26,14 +26,14 @@
             </div>
             <div class="form-group">
                 <label for="qualification">Qualification</label>
-                <select id="qualification" #selected=ngModel name="qualification" class="form-control"
+                <select id="qualification" name="qualification" class="form-control is-invalid"
                     #qualificationreq="ngModel" [(ngModel)]="defaultDropdown"
-                    [class.is-invalid]="qualificationreq.invalid && qualificationreq.touched" required ngModel>
+                    [class.is-invalid]="qualificationreq.touched && qualificationreq.value==0" required ngModel>
                     <option *ngFor="let qualification of qualifications" [value]="qualification.id">
                         {{qualification.qualification}}
                     </option>
                 </select>
-                <small class="text-danger" [class.d-none]="selected.untouched" *ngIf="selected.value=='0'">Please choose
+                <small class="text-danger" [class.d-none]="qualificationreq.untouched" *ngIf="qualificationreq.value=='0'">Please choose
                     your qualification</small>
             </div>
             <div class="form-group">
@@ -43,8 +43,9 @@
             </div>
             <div class="form-group">
                 <label for="Mobile Number">Mobile Number</label>
-                <input type="number" class="form-control" name="contactnumber" #mobile="ngModel"
-                    [(ngModel)]="contactnumber" pattern="^\d{10}$" placeholder="Enter your Mobile Number" required
+                <input type="number" class="form-control is-invalid" name="contactnumber" #mobile="ngModel"
+                    [(ngModel)]="contactnumber" [class.is-invalid]="mobile.invalid &&mobile.touched"
+                    pattern="^\d{10}$" placeholder="Enter your Mobile Number" required
                     ngModel />
                 <div *ngIf="mobile.touched">
                     <small class="text-danger" *ngIf="mobile.errors?.required">Mobile Number is required</small>
@@ -52,18 +53,19 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group"> 
                 <label for="Gender">Gender</label>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" value="male" name="gender" [(ngModel)]="gender" />
+                        <input type="radio" class="form-check-input is-invalid" value="male" name="gender" [(ngModel)]="gender" ngModel/>
                         Male
                     </label>
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" value="Female" name="gender"
-                            [(ngModel)]="gender" />
+                        <input type="radio" class="form-check-input" value="Female" name="gender" 
+                            [(ngModel)]="gender" ngModel/>
                         Female
                     </label>
+                      
                 </div>
             </div>
             <div class="form-group">
@@ -82,15 +84,16 @@
                 </div>
                 <div *ngIf="marital.value == 'Married'" class="form-group">
                     <label for="No of Children">No of Children</label>
-                    <input type="number" class="form-control" name="children" required
-                        #childrencontrol="ngModel" [(ngModel)]="children" ng-hide="maritalstatus" />
+                    <input type="number" class="form-control is-invalid" name="children" required
+                        #childrencontrol="ngModel" [(ngModel)]="children"  [class.is-invalid]="childrencontrol.invalid &&childrencontrol.touched"
+                         ng-hide="maritalstatus" />
                         <div class="text-danger" *ngIf="childrencontrol.invalid &&(childrencontrol.dirty || childrencontrol.touched)">
                             <div *ngIf="childrencontrol.errors.required"> No of Children is required</div>
                         </div>
                 </div>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" [disabled]="employeeForm.invalid" class="btn btn-primary">Create</button>
             </div>
         </form>
     </div>

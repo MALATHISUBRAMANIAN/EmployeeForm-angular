@@ -11,14 +11,15 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./employeeform.component.css']
 })
 export class EmployeeformComponent implements OnInit {
+  
   empname: string;
   mailid: string;
   age: number;
   qualification: string;
   experience: number;
   contactnumber: number;
-  gender: string;
-  maritalstatus: string;
+  gender: string = "male";
+  maritalstatus: string="single";
   children: number;
   defaultDropdown: number;
   showMsg: boolean = false;

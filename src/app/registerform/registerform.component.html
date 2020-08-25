@@ -20,12 +20,13 @@
         </div>
         <div class="form-group">
             <label for="psw"><b>Password</b></label>
-            <input type="password" #pwd="ngModel" ([ngModel])="password" class="form-control"
-                placeholder="Enter Password" name="password" id="psw" required ngModel>
+            <input type="password" #pwd="ngModel" ([ngModel])="password" class="form-control is-invalid"
+                placeholder="Enter Password" name="password" id="psw" [class.is-invalid]="pwd.invalid &&pwd.touched"
+                required ngModel minlength='8'>
         </div>
-        <div class="text-danger" *ngIf="pwd.invalid &&(pwd.dirty || pwd.touched)">
-            Password is required
-        </div>
+        <div>
+        <small class="text-danger" [class.d-none]="pwd.valid || pwd.untouched"> Password is required and  should contain minimum 8 letters</small>
+    </div>
         <div class="form-group">
             <label for="psw-repeat"><b>Confirm Password</b></label>
             <input type="password" #cfmpwd="ngModel" ([ngModel])="confirmpassword" class="form-control"
